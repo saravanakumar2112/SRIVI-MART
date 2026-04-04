@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login — SRIVI MART</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/login-portal.css" />
+</head>
+<body class="lp-body">
+  <div class="lp-wrap">
+    <a class="lp-back" href="index.html">← Back to store</a>
+    <div class="lp-brand">
+      <span class="lp-mark">S</span>
+      <h1>SRIVI MART</h1>
+    </div>
+    <p class="lp-sub">Choose your role to sign in or register. Each role has its own secure page (demo passwords stored in your browser only).</p>
+
+    <div class="lp-hub-grid">
+      <a class="lp-hub-card" href="login-customer.html">
+        <h2>Customer</h2>
+        <p>Browse, cart, delivery address, live order status &amp; refunds policy (production).</p>
+        <div class="lp-entity-mini">Entity: <code>Users</code> — UserID, Email, Address</div>
+      </a>
+      <a class="lp-hub-card" href="login-shop.html">
+        <h2>Shop owner</h2>
+        <p>List catalogue, receive orders, mark <strong>ready for pickup</strong>, commissions (15–30% in production).</p>
+        <div class="lp-entity-mini">Entity: <code>Restaurants</code> — RestaurantID, Name, Rating</div>
+      </a>
+      <a class="lp-hub-card" href="login-agent.html">
+        <h2>Delivery partner</h2>
+        <p>Matched to ready orders, GPS navigation, earnings from delivery fees (e.g. ₹20–40).</p>
+        <div class="lp-entity-mini">Entity: <code>DeliveryAgents</code> — AgentID, Location, Availability</div>
+      </a>
+
+    </div>
+
+    <p class="lp-hint" style="margin-top:1.5rem">Payments (UPI/cards/wallets), distance-based delivery, and GPS tracking require a real backend — see the “How it works” section on the store page.</p>
+  </div>
+</body>
+</html>

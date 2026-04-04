@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shop dashboard — SRIVI MART</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/login-portal.css" />
+  <style>
+    .shop-main { max-width: 720px; margin: 0 auto; padding: 1.25rem 1rem 4rem; }
+    .shop-order { margin-bottom: 1rem; }
+    .shop-actions { margin-top: 0.75rem; display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+  </style>
+</head>
+<body class="lp-body">
+  <header class="zm-header">
+    <div class="zm-header-inner container" style="max-width:720px">
+      <a href="shop.html" class="zm-logo"><span class="zm-logo-mark">S</span><span class="zm-logo-text">SHOP <b>PANEL</b></span></a>
+      <div class="zm-header-actions">
+        <a class="btn zm-btn-outline" href="index.html">Store</a>
+        <button type="button" class="btn zm-btn-ghost" id="shopLogout">Logout</button>
+      </div>
+    </div>
+  </header>
+  <main class="shop-main">
+    <h1 class="zm-section-title" id="shopTitle">Shop dashboard</h1>
+    <p class="section-sub" id="shopSub"></p>
+
+    <div class="lp-tabs" style="margin: 1.5rem 0;">
+      <button type="button" class="lp-tab active" data-tab="orders">Orders</button>
+      <button type="button" class="lp-tab" data-tab="inventory">Manage Inventory</button>
+    </div>
+
+    <div id="viewOrders">
+      <p class="section-sub">When you mark an order <strong>Ready for pickup</strong>, delivery partners get a notification on their dashboard.</p>
+      <div id="shopList"></div>
+      <p id="shopEmpty" class="section-sub">No new orders to prepare.</p>
+    </div>
+
+    <div id="viewInventory" hidden>
+      <p class="section-sub">Manage your custom items and prices. Customers will see this exact list when they select your shop.</p>
+      
+      <div id="inventoryList" style="margin-bottom: 2rem;"></div>
+      
+      <div class="lp-card" style="box-shadow: none; border: 1px solid #e1e1e1;">
+        <h3>Add New Item</h3>
+        <form id="formAddInventory" class="lp-form" style="margin-top: 1rem;">
+          <label>Item Name <input type="text" name="name" required /></label>
+          <label>Description <textarea name="desc" rows="2" required></textarea></label>
+          <div style="display:flex; gap:1rem;">
+            <label style="flex:1;">Category
+              <select name="cat" required style="width:100%; border:1px solid #ccc; padding:0.6rem; border-radius:4px; font-family:inherit;">
+                <option value="notebooks">Notebooks</option>
+                <option value="graph">Graph & practical</option>
+                <option value="guides">Guides & keys</option>
+                <option value="govt_exam">Govt exam books</option>
+                <option value="pens">Pens & pencils</option>
+                <option value="files">Files & folders</option>
+                <option value="geometry">Geometry & math box</option>
+                <option value="bags">Bags & pouches</option>
+                <option value="art">Art & chart</option>
+                <option value="gifts">Gifts</option>
+              </select>
+            </label>
+            <label style="flex:1;">Price (₹) <input type="number" name="price" min="1" required /></label>
+          </div>
+          <button type="submit" class="lp-btn">Add to catalog</button>
+        </form>
+      </div>
+    </div>
+  </main>
+  <div class="toast zm-toast" id="toast" role="status" hidden></div>
+  <script src="js/auth-common.js"></script>
+  <script src="js/shop.js"></script>
+</body>
+</html>

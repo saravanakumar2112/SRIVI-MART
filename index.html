@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SRIVI MART — Stationery &amp; books delivery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header class="zm-header">
+    <div class="zm-header-inner container">
+      <a href="#" class="zm-logo" id="logoHome" aria-label="SRIVI MART home">
+        <span class="zm-logo-mark">S</span>
+        <span class="zm-logo-text">SRIVI <b>MART</b></span>
+      </a>
+      <div class="zm-location" id="locationBar" title="Delivery area (demo)">
+        <span class="zm-location-icon" aria-hidden="true">📍</span>
+        <div class="zm-location-text">
+          <small>Deliver to</small>
+          <span id="deliveryPin">Srivilliputtur — Mangapuram</span>
+        </div>
+      </div>
+      <div class="zm-header-actions">
+        <span class="zm-user-pill" id="userPill" hidden></span>
+        <a class="btn zm-btn-outline" href="login.html" id="headerLoginLink">Login</a>
+        <button type="button" class="btn zm-btn-outline" id="headerLogoutBtn" hidden>Logout</button>
+        <button type="button" class="btn zm-btn-ghost" id="cartToggle" aria-expanded="false" aria-controls="cartPanel">
+          Cart <span class="cart-count" id="cartCount">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <aside class="cart-panel" id="cartPanel" hidden aria-label="Shopping cart">
+    <div class="cart-panel-head">
+      <h2>Your cart</h2>
+      <button type="button" class="icon-btn" id="cartClose" aria-label="Close cart">×</button>
+    </div>
+    <ul class="cart-list" id="cartList"></ul>
+    <p class="cart-empty" id="cartEmpty">Add notebooks, guides, pens, and more from the menu.</p>
+    <div class="cart-address-block" id="cartAddressBlock" hidden>
+      <label class="cart-label">Full delivery address <textarea id="deliveryAddress" rows="3" placeholder="Door no., street, area, town…" required></textarea></label>
+      <label class="cart-label">Landmark (optional) <input type="text" id="deliveryLandmark" placeholder="Near school, bus stop, shop…" autocomplete="street-address" /></label>
+      <label class="cart-label">PIN code <input type="text" id="deliveryPincode" inputmode="numeric" maxlength="6" pattern="[0-9]{6}" placeholder="626125" required /></label>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-summary" id="cartSummary" hidden>
+        <div class="cart-line"><span>Items</span><span id="cartSubtotal">₹0</span></div>
+        <div class="cart-line"><span>Delivery</span><span id="cartDeliveryFee">₹20</span></div>
+      </div>
+      <div class="cart-total-row">
+        <span>Total payable</span>
+        <strong id="cartTotal">₹0</strong>
+      </div>
+      <button type="button" class="btn zm-btn-primary btn-block" id="checkoutBtn">Place order</button>
+    </div>
+  </aside>
+  <div class="cart-backdrop" id="cartBackdrop" hidden></div>
+
+  <!-- Customer app -->
+  <main class="zm-main" id="customerApp">
+    <section class="zm-hero container">
+      <div class="zm-search-wrap">
+        <span class="zm-search-icon" aria-hidden="true">🔍</span>
+        <input type="search" id="catalogSearch" class="zm-search" placeholder="Search notebooks, guides, pens, files…" autocomplete="off" aria-label="Search catalogue" />
+      </div>
+      <p class="zm-tagline">School stationery &amp; books — delivered like your favourite food app. <a href="#workflow" class="workflow-hero-link">How it works &amp; build roadmap →</a></p>
+    </section>
+
+    <section class="container zm-section" id="activeShopSelect" style="margin-top: 1rem;">
+      <h2 class="zm-section-title">Select a shop to browse</h2>
+      <p class="section-sub">Choose a specific merchant below to see their local stock and prices.</p>
+      <div id="dynamicShopList" class="product-grid"></div>
+    </section>
+
+    <section class="container zm-section" id="deals" hidden>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 1rem;">
+        <h2 class="zm-section-title" style="margin-bottom:0;" id="catalogShopTitle">Order by category</h2>
+        <button type="button" class="btn zm-btn-outline" id="btnChangeShop" style="font-size:12px; padding:6px 12px;">Change shop</button>
+      </div>
+      <div class="category-scroll" id="categoryChips" role="tablist" aria-label="Categories"></div>
+      <div id="productFeed" class="product-grid"></div>
+    </section>
+
+    <section class="zm-section zm-section-muted" id="areas">
+      <div class="container">
+        <h2 class="zm-section-title">Where we deliver</h2>
+        <p class="section-sub">Srivilliputtur, Sivakasi, Rajapalayam &amp; nearby.</p>
+        <div class="area-cards" id="areaCards"></div>
+      </div>
+    </section>
+
+    <section class="container zm-section" id="shops">
+      <h2 class="zm-section-title">Partner shops</h2>
+      <p class="section-sub">Open in Google Maps for directions.</p>
+      <div class="filter-bar">
+        <label for="cityFilter">Town</label>
+        <select id="cityFilter" aria-label="Filter by town">
+          <option value="all">All towns</option>
+          <option value="Srivilliputtur">Srivilliputtur</option>
+          <option value="Sivakasi">Sivakasi</option>
+          <option value="Rajapalayam">Rajapalayam</option>
+        </select>
+        <input type="search" id="shopSearch" placeholder="Search shop…" aria-label="Search shops" />
+      </div>
+      <ul class="shop-list" id="shopList"></ul>
+    </section>
+
+    <section class="zm-section zm-section-muted" id="map">
+      <div class="container">
+        <h2 class="zm-section-title">Maps</h2>
+        <div class="map-tabs" role="tablist" aria-label="City maps">
+          <button type="button" class="map-tab active" data-map="srivi" aria-selected="true">Srivilliputtur</button>
+          <button type="button" class="map-tab" data-map="siva" aria-selected="false">Sivakasi</button>
+          <button type="button" class="map-tab" data-map="raja" aria-selected="false">Rajapalayam</button>
+        </div>
+        <div class="map-frames">
+          <div class="map-frame active" data-map="srivi">
+            <iframe title="Stationery near Srivilliputtur" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=stationery+book+shop+Srivilliputtur+Tamil+Nadu&output=embed&z=13" allowfullscreen></iframe>
+          </div>
+          <div class="map-frame" data-map="siva" hidden>
+            <iframe title="Stationery near Sivakasi" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=notebook+stationery+shop+Sivakasi+Tamil+Nadu&output=embed&z=13" allowfullscreen></iframe>
+          </div>
+          <div class="map-frame" data-map="raja" hidden>
+            <iframe title="Books near Rajapalayam" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=book+stationery+shop+Rajapalayam+Tamil+Nadu&output=embed&z=13" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+    <section class="container zm-section" id="customerOrdersSection">
+      <h2 class="zm-section-title">Your orders</h2>
+      <ul class="order-list" id="customerOrderList"></ul>
+      <p class="empty-orders" id="customerOrdersEmpty">No orders yet. Add items and tap Place order.</p>
+    </section>
+
+    <section class="container zm-section" id="accountSection">
+      <h2 class="zm-section-title">Account</h2>
+
+      <div class="account-panel" id="accountPanelUser" hidden>
+        <h3 id="accountUserName">Hello</h3>
+        <p id="accountUserMeta"></p>
+        <button type="button" class="btn zm-btn-outline" id="logoutCustomerBtn">Logout</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Delivery agent app -->
+  <main class="zm-main agent-main" id="agentApp" hidden>
+    <div class="container zm-section">
+      <div class="agent-notif-banner" id="agentNotifBanner" hidden role="status"></div>
+      <div class="agent-banner">
+        <h2 class="zm-section-title">Partner dashboard</h2>
+        <p class="section-sub" id="agentWelcome">Pick up from stores and mark deliveries here (demo).</p>
+      </div>
+      <div class="agent-stats" id="agentStats"></div>
+      <h3 class="zm-subtitle">Active &amp; recent orders</h3>
+      <ul class="order-list agent-order-list" id="agentOrderList"></ul>
+      <p class="empty-orders" id="agentOrdersEmpty">No orders in queue.</p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p><strong>SRIVI MART</strong> — demo storefront. Not affiliated with listed shops.</p>
+      <p class="footer-copy">© <span id="year"></span> SRIVI MART</p>
+    </div>
+  </footer>
+
+  <nav class="bottom-nav" id="bottomNav" aria-label="Main">
+    <button type="button" class="bottom-nav-item active" data-view="home">
+      <span class="bn-icon" aria-hidden="true">🏠</span>
+      <span>Home</span>
+    </button>
+    <button type="button" class="bottom-nav-item" data-view="orders">
+      <span class="bn-icon" aria-hidden="true">📦</span>
+      <span>Orders</span>
+    </button>
+    <button type="button" class="bottom-nav-item" data-view="cart">
+      <span class="bn-icon" aria-hidden="true">🛒</span>
+      <span>Cart</span>
+    </button>
+    <button type="button" class="bottom-nav-item" data-view="workflow">
+      <span class="bn-icon" aria-hidden="true">📋</span>
+      <span>How it works</span>
+    </button>
+    <button type="button" class="bottom-nav-item" data-view="account">
+      <span class="bn-icon" aria-hidden="true">👤</span>
+      <span>Account</span>
+    </button>
+  </nav>
+
+  <nav class="bottom-nav agent-bottom-nav" id="agentBottomNav" hidden aria-label="Partner">
+    <button type="button" class="bottom-nav-item active" data-agent-view="tasks">
+      <span class="bn-icon" aria-hidden="true">🛵</span>
+      <span>Deliveries</span>
+    </button>
+    <button type="button" class="bottom-nav-item" data-agent-view="logout">
+      <span class="bn-icon" aria-hidden="true">⏻</span>
+      <span>Logout</span>
+    </button>
+  </nav>
+
+  <div class="toast zm-toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <script src="js/auth-common.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

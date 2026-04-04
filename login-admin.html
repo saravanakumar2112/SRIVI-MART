@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin login — SRIVI MART</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/login-portal.css" />
+</head>
+<body class="lp-body">
+  <div class="lp-wrap">
+    <a class="lp-back" href="login.html">← All roles</a>
+    <div class="lp-brand">
+      <span class="lp-mark">S</span>
+      <h1>Admin</h1>
+    </div>
+    <p class="lp-sub">Approve shops &amp; partners, manage listings and settlements, monitor <code>Orders</code> (OrderID, UserID, Status), handle disputes.</p>
+
+    <div class="lp-entity">
+      <strong>DB reference — Orders &amp; platform</strong>
+      Orders: OrderID (PK), UserID (FK), Status. First admin signup needs access code <code>SRIVI-ADMIN-DEMO</code>.
+    </div>
+
+    <div class="lp-card">
+      <div class="lp-tabs">
+        <button type="button" class="lp-tab active" data-tab="in">Sign in</button>
+        <button type="button" class="lp-tab" data-tab="up">Register admin</button>
+      </div>
+      <div id="msg"></div>
+
+      <form class="lp-form" id="formIn">
+        <label>Admin email <input type="email" name="email" required autocomplete="username" /></label>
+        <label>Password <input type="password" name="password" required autocomplete="current-password" /></label>
+        <button type="submit" class="lp-btn">Open admin panel</button>
+      </form>
+
+      <form class="lp-form" id="formUp" hidden>
+        <label>Access code <input type="text" name="access" required placeholder="SRIVI-ADMIN-DEMO" autocomplete="off" /></label>
+        <label>Admin email <input type="email" name="email" required autocomplete="email" /></label>
+        <label>
+          Password
+          <div class="lp-row">
+            <input type="text" name="password" id="pwUp" required autocomplete="new-password" />
+            <button type="button" class="lp-gen" id="genUp">Generate</button>
+          </div>
+        </label>
+        <button type="submit" class="lp-btn">Create admin</button>
+      </form>
+
+      <p class="lp-hint">Demo only. Production admins need SSO, audit logs, and role-based access.</p>
+    </div>
+  </div>
+  <script src="js/auth-common.js"></script>
+  <script>
+(function () {
+  var msg = document.getElementById("msg");
+  function show(text, ok) {
+    msg.innerHTML = text ? '<p class="lp-msg ' + (ok ? "ok" : "err") + '">' + text + "</p>" : "";
+  }
+  document.querySelectorAll(".lp-tab").forEach(function (t) {
+    t.addEventListener("click", function () {
+      document.querySelectorAll(".lp-tab").forEach(function (x) { x.classList.toggle("active", x === t); });
+      var up = t.getAttribute("data-tab") === "up";
+      document.getElementById("formIn").hidden = up;
+      document.getElementById("formUp").hidden = !up;
+      show("");
+    });
+  });
+  document.getElementById("genUp").addEventListener("click", function () {
+    document.getElementById("pwUp").value = SriviAuth.generatePassword(16);
+  });
+  document.getElementById("formIn").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var fd = new FormData(e.target);
+    var r = SriviAuth.loginAdmin(fd.get("email"), fd.get("password"));
+    if (!r.ok) return show(r.msg, false);
+    var u = r.user;
+    SriviAuth.setSession({ role: "admin", adminId: u.adminId, email: u.email });
+    show("Signed in. Redirecting…", true);
+    setTimeout(function () { location.href = "admin.html"; }, 400);
+  });
+  document.getElementById("formUp").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var fd = new FormData(e.target);
+    var r = SriviAuth.registerAdmin(
+      { email: fd.get("email"), password: fd.get("password") },
+      fd.get("access")
+    );
+    if (!r.ok) return show(r.msg, false);
+    var u = r.user;
+    SriviAuth.setSession({ role: "admin", adminId: u.adminId, email: u.email });
+    show("Admin created. Redirecting…", true);
+    setTimeout(function () { location.href = "admin.html"; }, 400);
+  });
+})();
+  </script>
+</body>
+</html>

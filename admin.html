@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — SRIVI MART</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/login-portal.css" />
+  <style>
+    .admin-main { max-width: 900px; margin: 0 auto; padding: 1.25rem 1rem 4rem; }
+    .admin-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.75rem; margin: 1rem 0; }
+    .admin-card { background: #fff; border: 1px solid var(--border, #e8e8e8); border-radius: 12px; padding: 1rem; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+    .admin-card strong { display: block; font-size: 1.5rem; color: var(--zm-red, #e23744); }
+    .admin-card span { font-size: 0.72rem; color: #696969; font-weight: 700; text-transform: uppercase; }
+    .admin-list { font-size: 0.88rem; color: #444; line-height: 1.6; }
+  </style>
+</head>
+<body class="lp-body">
+  <header class="zm-header">
+    <div class="zm-header-inner container" style="max-width:900px">
+      <span class="zm-logo"><span class="zm-logo-mark">S</span><span class="zm-logo-text">ADMIN <b>PANEL</b></span></span>
+      <div class="zm-header-actions">
+        <a class="btn zm-btn-outline" href="index.html">Store</a>
+        <a class="btn zm-btn-outline" href="login.html">Roles</a>
+        <button type="button" class="btn zm-btn-ghost" id="adminLogout">Logout</button>
+      </div>
+    </div>
+  </header>
+  <main class="admin-main container">
+    <h1 class="zm-section-title">Platform overview</h1>
+    <p class="section-sub" id="adminMeta"></p>
+    <div class="admin-grid" id="adminStats"></div>
+    <h2 class="zm-subtitle">What a full admin does</h2>
+    <ul class="admin-list">
+      <li>Approve <strong>restaurants</strong> (shops) and <strong>delivery partners</strong> before they go live.</li>
+      <li>Manage catalog listings, commission (e.g. 15–30% capped), and payouts after customer payments settle.</li>
+      <li>Monitor <strong>Orders</strong> — OrderID, UserID, Status — and GPS/live tracking in production.</li>
+      <li>Handle cancellations/refunds (5–7 business days on major platforms) and disputes.</li>
+      <li>Dashboards: GMV, active users, delivery SLA, marketing spend.</li>
+    </ul>
+    <p class="lp-hint" style="margin-top:1.5rem">This page only reads counts from your browser’s demo data. No server.</p>
+  </main>
+  <script src="js/auth-common.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
